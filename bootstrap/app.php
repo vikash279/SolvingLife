@@ -15,6 +15,11 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+// header('Access-Control-Allow-Origin : http://localhost:3000');
+// header('Access-Control-Allow-Methods : GET, POST, PUT, DELETE, PATCH, OPTIONS');
+// header('Access-Control-Allow-Headers : Origin, Content-Type, Accept, Authorization, X-Request-With');
+// header('Access-Control-Allow-Credentials : true');
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
@@ -40,6 +45,8 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
+
+
 
 /*
 |--------------------------------------------------------------------------
