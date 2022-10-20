@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,15 @@ Route::post('/addteammember',[AdminController::class, 'addTeamMember'])->name('a
 Route::get('/packages',[AdminController::class, 'packages'])->name('packages');
 Route::get('/autopool',[AdminController::class, 'autopool'])->name('autopool');
 Route::get('/payment-history',[AdminController::class, 'paymentHistory'])->name('payment-history');
+
+
+//User Routes
+Route::get('/userlogin',[UserController::class, 'login'])->name('userlogin');
+Route::post('/userdologin',[UserController::class, 'userdoLogin'])->name('userdologin');
+Route::get('user/dashboard',[UserController::class, 'dashboard'])->name('user-dashboard');
+Route::get('user/referal-list',[UserController::class, 'allReferals'])->name('referal-list');
+
+
 
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');

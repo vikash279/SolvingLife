@@ -44,46 +44,68 @@
                   </div>
                </a>
             </li>
-            <li>
-               <a href="{{url('team-members-list')}}">
-                  <div class="nav_icon_small">
-                     <img src="{!!asset('assets/img/menu-icon/4.svg')!!}" alt="">
-                  </div>
-                  <div class="nav_title">
-                     <span>Team Member List </span>
-                  </div>
-               </a>
-            </li>
-            <li>
-               <a href="{{url('add-team-member')}}">
-                  <div class="nav_icon_small">
-                     <img src="{!!asset('assets/img/menu-icon/5.svg')!!}" alt="">
-                  </div>
-                  <div class="nav_title">
-                     <span>Add Team Member</span>
-                  </div>
-               </a>
-            </li>
-            <li>
-               <a href="{{url('packages')}}">
-                  <div class="nav_icon_small">
-                     <img src="{!!asset('assets/img/menu-icon/11.svg')!!}" alt="">
-                  </div>
-                  <div class="nav_title">
-                     <span>Packages</span>
-                  </div>
-               </a>
-            </li>            
-            <li>
-               <a href="{{url('autopool')}}" >
-                  <div class="nav_icon_small">
-                     <img src="{!!asset('assets/img/menu-icon/18.svg')!!}" alt="">
-                  </div>
-                  <div class="nav_title">
-                     <span>Autopool</span>
-                  </div>
-               </a>
-            </li>
+           
+            <li class="">
+<a class="has-arrow" href="#" aria-expanded="false">
+<div class="nav_icon_small">
+<img src="{!!asset('assets/img/menu-icon/5.svg')!!}" alt="">
+</div>
+<div class="nav_title">
+<span>Profile </span>
+</div>
+</a>
+<ul>
+<li><a href="index_2.html">Edit Profile</a></li>
+<li><a href="index_3.html">Reset Password</a></li>
+</ul>
+</li>
+
+<li class="">
+<a class="has-arrow" href="#" aria-expanded="false">
+<div class="nav_icon_small">
+<img src="{!!asset('assets/img/menu-icon/11.svg')!!}" alt="">
+</div>
+<div class="nav_title">
+<span>Activation Area </span>
+</div>
+</a>
+<ul>
+<li><a href="index_2.html">Add Fund</a></li>
+<li><a href="index_3.html">Activation</a></li>
+<li><a href="index_3.html">Upgrade Pool</a></li>
+<li><a href="index_3.html">Activation History</a></li>
+<li><a href="index_3.html">Add Fund History</a></li>
+</ul>
+</li>
+<li class="">
+<a class="has-arrow" href="#" aria-expanded="false">
+<div class="nav_icon_small">
+<img src="{!!asset('assets/img/menu-icon/11.svg')!!}" alt="">
+</div>
+<div class="nav_title">
+<span>Team Area </span>
+</div>
+</a>
+<ul>
+<li><a href="index_2.html">Referal</a></li>
+<li><a href="index_3.html">Level View</a></li>
+<li><a href="index_3.html">Performance Team</a></li>
+</ul>
+</li>            
+<li class="">
+<a class="has-arrow" href="#" aria-expanded="false">
+<div class="nav_icon_small">
+<img src="{!!asset('assets/img/menu-icon/11.svg')!!}" alt="">
+</div>
+<div class="nav_title">
+<span>Income Reports </span>
+</div>
+</a>
+<ul>
+<li><a href="index_2.html">Sponser Bonus</a></li>
+<li><a href="index_3.html">Team Building Bonus</a></li>
+</ul>
+</li>  
             
             <li>
                <a href="referral.php">
@@ -91,7 +113,18 @@
                      <img src="{!!asset('assets/img/menu-icon/14.svg')!!}" alt="">
                   </div>
                   <div class="nav_title">
-                     <span>Generator Referral Link</span>
+                     <span>wallet</span>
+                  </div>
+               </a>
+            </li>
+           
+            <li>
+               <a href="{{url('payment-history')}}">
+                  <div class="nav_icon_small">
+                     <img src="{!!asset('assets/img/menu-icon/21.svg')!!}" alt="">
+                  </div>
+                  <div class="nav_title">
+                     <span>Support</span>
                   </div>
                </a>
             </li>
@@ -101,7 +134,7 @@
                      <img src="{!!asset('assets/img/menu-icon/21.svg')!!}" alt="">
                   </div>
                   <div class="nav_title">
-                     <span>Payment History</span>
+                     <span>Logout</span>
                   </div>
                </a>
             </li>
