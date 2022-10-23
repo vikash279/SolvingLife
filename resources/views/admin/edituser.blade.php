@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Add Users')
+@section('title', 'Edit Users')
 
 @section('content')
 <!-- main content Start -->
@@ -12,7 +12,7 @@
                <div class="row">
                   <div class="col-lg-6">
                      <div class="dashboard_breadcam">
-                        <p><a href="{{url('dashboard')}}">Dashboard</a> <i class="fas fa-caret-right"></i> Add Team Member</p>
+                        <p><a href="{{url('dashboard')}}">Dashboard</a> <i class="fas fa-caret-right"></i> Edit Team Member</p>
                      </div>
                   </div>
                   <div class="col-lg-6">
@@ -40,13 +40,13 @@
             <strong>{{ $message }}</strong>
          </div>
          @endif
-         <form action="{{ url('addteammember') }}" method="post">
+         <form action="{{ url('updateteammember') }}" method="post">
           @csrf
             <div class="white_card card_height_100 mb_30">
                <div class="white_card_header">
                   <div class="box_header m-0">
                      <div class="main-title">
-                        <h3 class="m-0">Add New User </h3>
+                        <h3 class="m-0">Edit User </h3>
                      </div>
                   </div>
                </div>
@@ -54,59 +54,54 @@
                   <div class="row"> 
                   <div class="col-lg-6">
                         <div class="common_input mb_15">
-                           <input type="text" name="referral" placeholder="Referral" onchange="getDetails(this.value)" required>
+                           <input type="text" name="referral" placeholder="Referral" value="{{$details->referred_by}}" readonly required>
+                           <input type="hidden" name="id" value="{{$details->id}}">
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="common_input mb_15">
-                           <input type="text" name="referraldetails" id="referraldetails" placeholder="User Details" readonly required>
-                           <div id="err" class="text-danger"></div>
+                           <input type="text" name="referraldetails" id="referraldetails" placeholder="User Details" value="{{$referredby->fname}} {{$referredby->lname}}" readonly required>
                         </div>
                      </div>  
                     <div class="col-lg-6">
                         <div class="common_input mb_15">
-                           <input type="text" name="username" placeholder="Username" required>
+                           <input type="text" name="username" value="{{$details->username}}" placeholder="Username" required>
+                        </div>
+                     </div>                  
+                     <div class="col-lg-6">
+                        <div class="common_input mb_15">
+                           <input type="text" name="fname" value="{{$details->fname}}" placeholder="First Name" required>
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="common_input mb_15">
-                           <input type="password" name="password" placeholder="Password" required>
-                        </div>
-                     </div>                    
-                     <div class="col-lg-6">
-                        <div class="common_input mb_15">
-                           <input type="text" name="fname" placeholder="First Name" required>
+                           <input type="text" name="lname" value="{{$details->lname}}" placeholder="Last Name" required>
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="common_input mb_15">
-                           <input type="text" name="lname" placeholder="Last Name" required>
+                           <input type="email" name="email" value="{{$details->email}}" placeholder="Email Address" readonly required>
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="common_input mb_15">
-                           <input type="email" name="email" placeholder="Email Address" required>
+                           <input type="text" name="phone" value="{{$details->phone}}" placeholder="Mobile No" readonly required>
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="common_input mb_15">
-                           <input type="text" name="phone" placeholder="Mobile No" required>
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <div class="common_input mb_15">
-                           <input type="text" name="plan" placeholder="Plan" required>
+                           <input type="text" name="plan" value="{{$details->plan}}" placeholder="Plan" required>
                         </div>
                      </div>
                      <div class="col-lg-12">
                         <div class="common_input mb_15">
-                           <input type="text" name="address" placeholder="Address" required>
+                           <input type="text" name="address" value="{{$details->address}}" placeholder="Address" required>
                         </div>
                      </div>
                      <div class="col-12">
                         <div class="create_report_btn mt_30">
                            <!-- <a href="#" class="btn_1 radius_btn d-block text-center">Add Team Member</a> -->
-                           <button class="btn_1 radius_btn d-block text-center">Add Team Member</button>
+                           <button class="btn_1 radius_btn d-block text-center">Update Team Member</button>
                         </div>
                      </div>
                   </div>
@@ -117,28 +112,5 @@
       </div>
    </div>
 </div>
-<script type="text/javascript">
-   function getDetails(value){
-     // alert(value);
-      $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-      $.ajax({
-        url: "http://localhost/SolvingLife/getreferraldeatils",
-        type: "post",
-        data: {value:value} ,
-        success: function (response) {
-         if(response){
-            document.getElementById('referraldetails').value = response;
-         }else{
-           // alert("No user found with the given referral id");
-            document.getElementById('err').innerHTML = "No user Found";
-         } 
-        }
-    });
-   }
-</script>
 <!-- main content  End-->
 @endsection

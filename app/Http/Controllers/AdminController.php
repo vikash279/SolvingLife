@@ -29,7 +29,7 @@ class AdminController extends Controller
 
     public function allUsers(Request $request){
         if (session()->get('admin_id')){
-          $allusers = User::orderBy('id','desc')->get();
+          $allusers = User::where('user_type', '!=', 'admin')->orderBy('id','desc')->get();
          // print_r($allusers);die;  
           return view('admin.allusers',compact('allusers'));
         }else{
@@ -59,9 +59,10 @@ class AdminController extends Controller
         // $userdata = DB::table('admins')->select('*')->where('email', $request->email)->where('status', 1)->first();
           $where = [
              'email' => $request->email,
-             'status' => '1'
+             'status' => '1',
+             'user_type' => 'admin'
           ];
-          $userdata = Admin::where($where)->first();
+          $userdata = User::where($where)->first();
         // print_r($userdata->email);die;
          if(!empty($userdata->email)){
         if($userdata->password == $request->password){
@@ -140,6 +141,9 @@ class AdminController extends Controller
         $input = $request->all();
         $randomnum = $this->getRandomString(3);
         $input['userid'] = "SL".$randomnum;
+        $input['referral_id'] = $request->fname.$randomnum;
+        $input['referred_by'] = $request->referral;
+        $input['user_type'] = 'user';
         $res = User::create($input);
         
         $data = [
@@ -179,5 +183,61 @@ class AdminController extends Controller
              }
          }
          return $message;
+     }
+
+     public function getReferralDeatils(Request $request){
+        $referral = $request->value;
+        $details = User::where('referral_id', $referral)->first();
+        if($details){
+        $userdetails = $details->fname.' '.$details->lname;
+        }else{
+            $userdetails = "";
+        }
+        print_r($userdetails);
+     }
+
+     public function changeUserStatus(Request $request){
+        //print_r($request->id);
+        $data = ['status' => '0'];
+        $res = User::where('id', $request->id)->update($data);
+        if($res){
+            print_r("1");
+        }else{
+            print_r("0");
+        }
+     }
+
+     public function changeUserStatusActive(Request $request){
+        $data = ['status' => '1'];
+        $res = User::where('id', $request->id)->update($data);
+        if($res){
+            print_r("1");
+        }else{
+            print_r("0");
+        }
+     }
+
+     public function editUsers(Request $request,$id){
+        $details = User::where('id', $id)->first();
+       // print_r($details);die;
+       if($details){
+        $referredby = User::where('referral_id', $details->referred_by)->first();
+       // print_r($referredby);die;
+       }
+        return view('admin.edituser', compact('details','referredby'));
+     }
+
+     public function updateTeamMember(Request $request){
+        $where = ['id' => $request->id];
+        $data = [
+            'username' => $request->username,
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'plan' => $request->plan,
+            'address' => $request->address
+        ];
+
+        $res = User::where($where)->update($data);
+        return back()->with('success','Team Member updated successfully!');
      }
 }

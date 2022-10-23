@@ -28,6 +28,9 @@ class User extends Authenticatable
         'plan',
         'status',
         'address',
+        'referral_id',
+        'user_type',
+        'referred_by',
     ];
 
     /**
