@@ -3,6 +3,7 @@
 @section('title', 'All Users')
 
 @section('content')
+
 <!-- main content Start -->
 <div class="main_content_iner">
    <div class="container-fluid p-0">
@@ -49,7 +50,8 @@
                                  <th scope="col">Phone</th>
                                  <th scope="col">Plan</th>
                                  <th scope="col">Status</th>
-                                 <th scope="col">Status</th>
+                                 <th scope="col">Deactivate</th>
+                                 <th scope="col">Activate</th>
                                  <th scope="col">Action</th>
                               </tr>
                            </thead>
@@ -73,15 +75,23 @@
                                  <td>
                                     <div class="checkbox_wrap d-flex align-items-center">
                                        <label class="form-label lms_checkbox_1" for="course_1">
-                                          <input type="checkbox" id="course_1">
+                                          <input type="checkbox" id="course_1" onchange="changeStatus(<?php echo $val->id ?>)">
+                                          <div class="slider-check round"></div>
+                                       </label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div class="checkbox_wrap d-flex align-items-center">
+                                       <label class="form-label lms_checkbox_1" for="course_2">
+                                          <input type="checkbox" id="course_2" onchange="changeStatusActive(<?php echo $val->id ?>)">
                                           <div class="slider-check round"></div>
                                        </label>
                                     </div>
                                  </td>
                                  <td>
                                     <div class="action_btns d-flex">
-                                       <a href="add-team-member.php" class="action_btn mr_10"> <i class="far fa-edit"></i> </a>
-                                       <a href="#" class="action_btn"> <i class="fas fa-trash"></i> </a>
+                                       <a href="{{url('edituser',$val->id)}}" class="action_btn mr_10"> <i class="far fa-edit"></i> </a>
+                                       <!-- <a href="#" class="action_btn"> <i class="fas fa-trash"></i> </a> -->
                                     </div>
                                  </td>
                               </tr>
@@ -96,5 +106,69 @@
       </div>
    </div>
 </div>
+<script type="text/javascript">
+  function changeStatus(id){
+  // alert(id);
+   $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+      $.ajax({
+        url: "http://localhost/SolvingLife/changeuserstatus",
+        type: "post",
+        data: {id:id} ,
+        success: function (response) {
+         if(response == 1){
+            swal({
+            text: "User Deactivated Successfully",
+            icon: "success",
+            buttons: ['YES'],
+            dangerMode: true
+         })
+         window.location.reload();
+         }else{
+            swal({
+               text: "Please try later",
+               icon: "error",
+               buttons: ['YES'],
+               dangerMode: true
+            })
+         }
+        }
+    });
+  }
+
+  function changeStatusActive(id){
+   $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+      $.ajax({
+        url: "http://localhost/SolvingLife/changeuserstatusactive",
+        type: "post",
+        data: {id:id} ,
+        success: function (response) {
+         if(response == 1){
+            swal({
+            text: "User Activated Successfully",
+            icon: "success",
+            buttons: ['YES'],
+            dangerMode: true
+         })
+         window.location.reload();
+         }else{
+            swal({
+               text: "Please try later",
+               icon: "error",
+               buttons: ['YES'],
+               dangerMode: true
+            })
+         }
+        }
+    });
+  }
+</script>   
 <!-- main content  End-->
 @endsection

@@ -2,6 +2,7 @@
    <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta name="csrf-token" content="{{ csrf_token() }}" />
       <title>Admin</title>
       <link rel="icon" href="{!!asset('public/assets/img/mini_logo.png')!!}" type="image/png">
       <link rel="stylesheet" href="{!!asset('public/assets/css/bootstrap1.min.css')!!}" />
@@ -293,6 +294,8 @@
          <i class="ti-angle-up"></i>
          </a>
       </div>
+      <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
       <script src="{!!asset('public/assets/js/jquery1-3.4.1.min.js')!!}"></script>
       <script src="{!!asset('public/assets/js/popper1.min.js')!!}"></script>
       <script src="{!!asset('public/assets/js/bootstrap1.min.js')!!}"></script>
