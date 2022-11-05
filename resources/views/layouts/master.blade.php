@@ -87,7 +87,7 @@
             </li>
             
             <li>
-               <a href="referral.php">
+               <a href="javascript::void(0)">
                   <div class="nav_icon_small">
                      <img src="{!!asset('public/assets/img/menu-icon/14.svg')!!}" alt="">
                   </div>
