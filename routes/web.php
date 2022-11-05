@@ -21,6 +21,7 @@ Route::get('/dashboard',[AdminController::class, 'dashboard'])->name('dashboard'
 Route::get('/team-members-list',[AdminController::class, 'allUsers'])->name('team-members-list');
 Route::get('/add-team-member',[AdminController::class, 'addUsers'])->name('add-team-member');
 Route::get('/edituser/{id}',[AdminController::class, 'editUsers']);
+Route::get('/autopool-payment/{id}',[AdminController::class, 'autopoolPayment']);
 Route::get('/add-team-member',[AdminController::class, 'addUsers'])->name('add-team-member');
 Route::post('/addteammember',[AdminController::class, 'addTeamMember'])->name('addteammember');
 Route::get('/packages',[AdminController::class, 'packages'])->name('packages');

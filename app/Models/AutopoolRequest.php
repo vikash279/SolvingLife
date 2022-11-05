@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserWallet extends Model
+class AutopoolRequest extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'userid',
+        'user_id',
+        'package_id',
         'amount',
-        'transafer_type',
+        'date_sent',
+        'amount_transfer_date',
+        'status',
     ];
 }

@@ -10,6 +10,7 @@ use Validator;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\UserWallet;
+use App\Models\AutopoolRequest;
 use Illuminate\Support\Facades\DB;
 
 
@@ -56,20 +57,19 @@ class AdminController extends Controller
              return $this->sendError('Validation Error.', $validator->errors());       
          }
          
-        // $userdata = DB::table('admins')->select('*')->where('email', $request->email)->where('status', 1)->first();
           $where = [
              'email' => $request->email,
              'status' => '1',
              'user_type' => 'admin'
           ];
           $userdata = User::where($where)->first();
-        // print_r($userdata->email);die;
          if(!empty($userdata->email)){
         if($userdata->password == $request->password){
            // print_r("login done");die;
             
              $request->session()->put('email',$userdata->email);
-             $request->session()->put('admin_id',$userdata->id);
+             $request->session()->put('admin_id',$userdata->userid);
+             $request->session()->put('admin_referal_id',$userdata->referal_id);
              //$request->session()->put('user_type',$userdata->user_type);
          
          //  return redirect('dashBoard');
@@ -93,7 +93,13 @@ class AdminController extends Controller
 
      public function autopool(Request $request){
         if (session()->get('admin_id')){
-            return view('admin.autopool');
+           // $details = AutopoolRequest::orderBy('id','desc')->get();
+            $details = AutopoolRequest::join('users','users.userid','=','autopool_requests.user_id')
+                ->select('autopool_requests.*','users.username')
+                ->orderBy('autopool_requests.id','desc')
+                ->get();
+           // print_r($details);die;
+            return view('admin.autopool', compact('details'));
         }else{
             return redirect()->route('login');
         }
@@ -141,17 +147,36 @@ class AdminController extends Controller
         $input = $request->all();
         $randomnum = $this->getRandomString(3);
         $input['userid'] = "SL".$randomnum;
-        $input['referral_id'] = $request->fname.$randomnum;
+        $input['referal_id'] = $request->fname.$randomnum;
         $input['referred_by'] = $request->referral;
         $input['user_type'] = 'user';
         $res = User::create($input);
         
         $data = [
             'userid' => "SL".$randomnum,
-            'amount' => $request->plan
+            'amount' => $request->plan / 2
         ];
 
         $result = UserWallet::create($data);
+        $adminid = session()->get('admin_referal_id');
+        if($request->referral == $adminid){
+            $adminwalletbalance = UserWallet::where('userid', $adminid)->first();
+            $addedamount = $request->plan / 2;
+            $referraldata = [
+                'amount' => $adminwalletbalance->amount + $addedamount
+            ];
+    
+            $result = UserWallet::where('userid', $adminid)->update($referraldata);
+
+        }else{
+            $referraldata = [
+                'userid' => $request->referral,
+                'amount' => $request->plan / 2
+            ];
+    
+            $result = UserWallet::create($referraldata);
+        }
+       
         return back()->with('success','Team Member added successfully!');
      }
 
@@ -187,7 +212,7 @@ class AdminController extends Controller
 
      public function getReferralDeatils(Request $request){
         $referral = $request->value;
-        $details = User::where('referral_id', $referral)->first();
+        $details = User::where('referal_id', $referral)->first();
         if($details){
         $userdetails = $details->fname.' '.$details->lname;
         }else{
@@ -239,5 +264,31 @@ class AdminController extends Controller
 
         $res = User::where($where)->update($data);
         return back()->with('success','Team Member updated successfully!');
+     }
+
+     public function autopoolPayment(Request $request,$id){
+        $details = AutopoolRequest::where('id',$id)->first();
+        $adminid = session()->get('admin_referal_id');
+        $adminwalletbalance = UserWallet::where('userid', $adminid)->first();
+        if($adminwalletbalance->amount >= $details->amount){
+            $amount = $adminwalletbalance->amount - $details->amount;
+            $data = ['amount' => $amount];
+            $res = UserWallet::where('userid', $adminid)->update($data);
+
+            $useramount = [
+                'userid' => $details->user_id,
+                'amount' => $details->amount,
+                'transafer_type' => 'Autopool'
+            ];
+            $result = UserWallet::create($useramount);
+
+            $autopooldata = ['amount_transfer_date' => date('Y-m-d')];
+            $autopoolresult = AutopoolRequest::where('id', $details->id)->update($autopooldata);
+            return back()->with('success','Autopool successfully!');
+           
+        }else{
+            return back()->with('error','Admin does not have sufficient balance!');
+        }
+        
      }
 }

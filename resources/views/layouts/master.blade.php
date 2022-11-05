@@ -116,7 +116,7 @@
                   </div>
                </a>
             </li> -->
-            <li>
+            <!-- <li>
                <a href="profile.php">
                   <div class="nav_icon_small">
                      <img src="{!!asset('public/assets/img/menu-icon/18.svg')!!}" alt="">
@@ -125,7 +125,7 @@
                      <span>Profile </span>
                   </div>
                </a>
-            </li>
+            </li> -->
             <li>
                <a href="{{url('logout')}}">
                   <div class="nav_icon_small">
@@ -158,11 +158,11 @@
                            <div class="profile_info_iner">
                               <div class="profile_author_name">
                                  <p>Admin </p>
-                                 <h5>Dr. Ram Yadav</h5>
+                                 <!-- <h5>Dr. Ram Yadav</h5> -->
                               </div>
                               <div class="profile_info_details">
-                                 <a href="#">Profile </a>
-                                 <a href="#">Log Out </a>
+                                 <!-- <a href="#">Profile </a> -->
+                                 <a href="{{url('logout')}}">Log Out </a>
                               </div>
                            </div>
                         </div>
