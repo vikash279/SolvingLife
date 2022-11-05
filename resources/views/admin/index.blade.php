@@ -75,61 +75,59 @@
                         <table class="table lms_table_active3 ">
                            <thead>
                               <tr>
-                                 <th scope="col">title</th>
-                                 <th scope="col">Category</th>
-                                 <th scope="col">Teacher</th>
-                                 <th scope="col">Lesson</th>
-                                 <th scope="col">Enrolled</th>
-                                 <th scope="col">Price</th>
+                                 <th scope="col">ID</th>
+                                 <th scope="col">Name</th>
+                                 <th scope="col">UserName</th>
+                                 <th scope="col">Email</th>
+                                 <th scope="col">Phone</th>
+                                 <th scope="col">Plan</th>
                                  <th scope="col">Status</th>
+                                 <th scope="col">Deactivate</th>
+                                 <th scope="col">Activate</th>
+                                 <th scope="col">Action</th>
                               </tr>
                            </thead>
                            <tbody>
+                           <?php foreach($allusers as $val){ ?> 
+                             <?php 
+                               if($val->status == '1'){
+                                 $status = "Active";
+                               }else{
+                                 $status = "Inactive";
+                               }  
+                              ?> 
                               <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 1</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
+                                 <th scope="row"> <a href="#" class="question_content">{{$val->userid}}</a></th>
+                                 <td>{{$val->fname}} {{$val->lname}}</td>
+                                 <td>{{$val->username}}</td>
+                                 <td>{{$val->email}}</td>
+                                 <td>{{$val->phone}}</td>
+                                 <td>${{$val->plan}}</td>
+                                 <td><a href="#" class="status_btn">{{$status}}</a></td>
+                                 <td>
+                                    <div class="checkbox_wrap d-flex align-items-center">
+                                       <label class="form-label lms_checkbox_1" for="course_1">
+                                          <input type="checkbox" id="course_1" onchange="changeStatus(<?php echo $val->id ?>)">
+                                          <div class="slider-check round"></div>
+                                       </label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div class="checkbox_wrap d-flex align-items-center">
+                                       <label class="form-label lms_checkbox_1" for="course_2">
+                                          <input type="checkbox" id="course_2" onchange="changeStatusActive(<?php echo $val->id ?>)">
+                                          <div class="slider-check round"></div>
+                                       </label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div class="action_btns d-flex">
+                                       <a href="{{url('edituser',$val->id)}}" class="action_btn mr_10"> <i class="far fa-edit"></i> </a>
+                                       <!-- <a href="#" class="action_btn"> <i class="fas fa-trash"></i> </a> -->
+                                    </div>
+                                 </td>
                               </tr>
-                              <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 2</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 3</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 4</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 5</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
-                              </tr>
+                             <?php } ?> 
                            </tbody>
                         </table>
                      </div>

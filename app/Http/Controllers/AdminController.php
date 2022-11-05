@@ -22,7 +22,8 @@ class AdminController extends Controller
 
     public function dashboard(Request $request){
         if (session()->get('admin_id')){
-          return view('admin.index');
+          $allusers = User::where('user_type', '!=', 'admin')->orderBy('id','desc')->get();
+          return view('admin.index',compact('allusers'));
         }else{
           return redirect()->route('login');
         }
@@ -146,19 +147,20 @@ class AdminController extends Controller
 
         $input = $request->all();
         $randomnum = $this->getRandomString(3);
-        $input['userid'] = "SL".$randomnum;
+        $userid = "SL".$randomnum;
+        $input['userid'] = $userid;
         $input['referal_id'] = $request->fname.$randomnum;
         $input['referred_by'] = $request->referral;
         $input['user_type'] = 'user';
         $res = User::create($input);
         
         $data = [
-            'userid' => "SL".$randomnum,
+            'userid' =>  $userid,
             'amount' => $request->plan / 2
         ];
 
         $result = UserWallet::create($data);
-        $adminid = session()->get('admin_referal_id');
+        $adminid = session()->get('admin_id');
         if($request->referral == $adminid){
             $adminwalletbalance = UserWallet::where('userid', $adminid)->first();
             $addedamount = $request->plan / 2;
@@ -268,7 +270,7 @@ class AdminController extends Controller
 
      public function autopoolPayment(Request $request,$id){
         $details = AutopoolRequest::where('id',$id)->first();
-        $adminid = session()->get('admin_referal_id');
+        $adminid = session()->get('admin_id');
         $adminwalletbalance = UserWallet::where('userid', $adminid)->first();
         if($adminwalletbalance->amount >= $details->amount){
             $amount = $adminwalletbalance->amount - $details->amount;
