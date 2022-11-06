@@ -19,7 +19,7 @@
                   <div class="col-lg-6">
                      <div class="dashboard_header_title  text-end">
                         <div class="add_button ms-2">
-                           <a href="javascript::void(0)" class="btn_1">Create Invoice</a>
+                           <!-- <a href="javascript::void(0)" class="btn_1">Create Invoice</a> -->
                         </div>
                      </div>
                   </div>
@@ -43,61 +43,21 @@
                         <table class="table lms_table_active3 ">
                            <thead>
                               <tr>
-                                 <th scope="col">title</th>
-                                 <th scope="col">Category</th>
-                                 <th scope="col">Teacher</th>
-                                 <th scope="col">Lesson</th>
-                                 <th scope="col">Enrolled</th>
-                                 <th scope="col">Price</th>
-                                 <th scope="col">Status</th>
+                                 <th scope="col">User ID</th>
+                                 <th scope="col">Username</th>
+                                 <th scope="col">Amount</th>
+                                 <th scope="col">Transaction Type</th>
                               </tr>
                            </thead>
                            <tbody>
+                           <?php foreach($details as $val){ ?> 
                               <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 1</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
+                                 <th scope="row"> <a href="#" class="question_content">{{$val->userid}}</a></th>
+                                 <td>{{$val->fname}} {{$val->lname}}</td>
+                                 <td>{{$val->amount}}</td>
+                                 <td>{{$val->transafer_type}}</td>
                               </tr>
-                              <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 2</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 3</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 4</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                 <td>Category name 5</td>
-                                 <td>Teacher James</td>
-                                 <td>Lessons name</td>
-                                 <td>16</td>
-                                 <td>$25.00</td>
-                                 <td><a href="#" class="status_btn">Active</a></td>
-                              </tr>
+                           <?php } ?>
                            </tbody>
                         </table>
                      </div>

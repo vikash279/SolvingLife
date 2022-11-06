@@ -108,7 +108,11 @@ class AdminController extends Controller
 
      public function paymentHistory(Request $request){
         if (session()->get('admin_id')){
-            return view('admin.payment_history');
+            $details = UserWallet::join('users','users.userid','=','user_wallets.userid')
+            ->select('user_wallets.*','users.fname','users.lname')
+            ->orderBy('user_wallets.id','desc')
+            ->get();
+            return view('admin.payment_history', compact('details'));
         }else{
             return redirect()->route('login');
         } 
@@ -147,7 +151,7 @@ class AdminController extends Controller
 
         $input = $request->all();
         $randomnum = $this->getRandomString(3);
-        $userid = "SL".$randomnum;
+        $userid = "RML".$randomnum;
         $input['userid'] = $userid;
         $input['referal_id'] = $request->fname.$randomnum;
         $input['referred_by'] = $request->referral;
